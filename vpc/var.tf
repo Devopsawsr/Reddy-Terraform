@@ -1,5 +1,5 @@
 ################################################################################
-# VPC
+# VPC-VARIABLE
 ################################################################################
 
 variable "create_vpc" {
@@ -23,7 +23,7 @@ variable "cidr" {
 variable "azs" {
   description = "A list of availability zones names or ids in the region"
   type        = list(string)
-  default     = []
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
 variable "enable_dns_hostnames" {
@@ -43,13 +43,31 @@ variable "use_ipam_pool" {
   type        = bool
   default     = false
 }
+
 variable "instance_tenancy" {
   description = "A tenancy option for instances launched into the VPC"
   type        = string
   default     = "default"
 }
-variable "vpc_tags" {
-  description = "A map of tags to add to all resources"
+
+variable "public_subnet_cidrs" {
+ type        = list(string)
+ description = "Public Subnet CIDR values"
+ default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+}
+ 
+variable "private_subnet_cidrs" {
+ type        = list(string)
+ description = "Private Subnet CIDR values"
+ default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+}
+
+variable "resource_tags" {
+  description = "Tags to apply to AWS resources"
   type        = map(string)
-  default     = {}
+  default     = {
+    Name        = "MyResource"
+    Environment = "Production"
+    # Add more tags as needed
+  }
 }
