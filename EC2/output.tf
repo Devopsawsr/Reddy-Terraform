@@ -1,3 +1,3 @@
 output "instance_id" {
-  value = aws_instance.mnptech-web.id
+  value = aws_instance.reddy-web.id
 }

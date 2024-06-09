@@ -7,11 +7,21 @@ terraform {
       version = ">= 5.27"
     }
   }
-}
-terraform {
+
   backend "s3" {
     bucket = "lohithtestbucket"
-    key    = "ITC/S3/terraform.tfstate*"
+    key    = "Reddy/S3/terraform.tfstate"
     region = "us-east-1"
+  }
+}
+
+provider "aws" {
+  default_tags {
+    tags = {
+      Name        = "${var.Name}-${var.project}-${var.environment}-s3"
+      Environment = var.environment
+      Owner       = var.owner
+      Project     = var.project
+    }
   }
 }

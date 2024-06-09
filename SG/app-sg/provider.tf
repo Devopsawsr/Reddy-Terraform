@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket = "lohithtestbucket"
-    key    = "Reddy/EC2/terraform.tfstate"
+    key    = "Reddy/SG/app-sg/terraform.tfstate"
     region = "us-east-1"
   }
 }
@@ -18,7 +18,7 @@ terraform {
 provider "aws" {
   default_tags {
     tags = {
-      Name        = "${var.Name}-${var.project}-${var.environment}-ec2"
+      Name        = "${var.Name}-${var.project}-${var.environment}-sg"
       Environment = var.environment
       Owner       = var.owner
       Project     = var.project
