@@ -16,8 +16,13 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
+  region = "us-east-1"
   default_tags {
-    tags = var.tags
+    tags = {
+      Name        = "${var.Name}-${var.project}-${var.environment}-ec2"
+      Environment = var.environment
+      Owner       = var.owner
+      Project     = var.project
+    }
   }
 }

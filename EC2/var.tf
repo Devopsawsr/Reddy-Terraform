@@ -1,4 +1,10 @@
-variable "instnce_type" {
+variable "region" {
+    description  = "The Region where the infra is running"
+    type        = string
+    default     = " "
+}
+
+variable "instance_type" {
   description = "PLease provide the type of instnace that need to be launched"
   type        = string
 }
@@ -7,21 +13,8 @@ variable "Name" {
   type        = string
   default     = " "
 }
-variable "environment" {
-  description = "The environment for the resources"
-  type        = string
-  default     = " "
+variable "tags" {
+  description = "A map of tags to assign to the instances"
+  type        = map(string)
+  default     = {}
 }
-
-variable "owner" {
-  description = "The owner of the resources"
-  type        = string
-  default     = " "
-}
-
-variable "project" {
-  description = "The project name"
-  type        = string
-  default     = " "
-}
-
