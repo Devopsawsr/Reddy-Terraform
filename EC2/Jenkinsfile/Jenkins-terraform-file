@@ -6,28 +6,14 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Terraform Operation') {
+        stage('Terraform init') {
             steps {
-                script {
-                        parameters: [
-                            choice(choices: ['apply', 'destroy'], description: 'Select operation to perform')
-                        ]
-                    if (userInput == 'apply') {
-                        dir("/var/lib/jenkins/workspace/${JOB_NAME}/EC2") {
-                            sh "ls -la"
-                            sleep 10
-                            sh 'terraform init'
-                            sh 'terraform plan'
-                            sh 'terraform apply --auto-approve'
-                        }
-                    } else if (userInput == 'destroy') {
-                        dir("/var/lib/jenkins/workspace/${JOB_NAME}/EC2") {
-                            sleep 5
-                            sh 'terraform destroy --auto-approve'
-                        }
-                    } else {
-                        error "Invalid choice: ${userInput}"
-                    }
+                dir("/var/lib/jenkins/workspace/${JOB_NAME}/EC2") {
+                    sh "ls -la"
+                    sleep 10
+                    sh 'terraform init'
+                    sh 'terraform plan'
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
