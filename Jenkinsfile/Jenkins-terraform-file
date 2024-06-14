@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
@@ -9,14 +8,13 @@ pipeline {
         }
         stage('Terraform init') {
             steps {
-                dir('/var/jenkins_home/workspace/SamplePipeline/scripts') {
+                dir("/var/lib/jenkins/workspace/${JOB_NAME}/EC2") {
+                    sh "ls -la"
+                    sleep 10
                     sh 'terraform init'
+                    sh 'terraform plan'
+                    sh 'terraform apply -auto-approve'
                 }
-            }
-        }
-        stage('Terraform apply') {
-            steps {
-                sh 'terraform apply --auto-approve'
             }
         }
     }
