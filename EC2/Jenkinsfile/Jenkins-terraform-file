@@ -9,13 +9,9 @@ pipeline {
         stage('Terraform Operation') {
             steps {
                 script {
-                    def userInput = input(
-                        id: 'terraform-operation',
-                        message: 'Select Terraform operation:',
                         parameters: [
                             choice(choices: ['apply', 'destroy'], description: 'Select operation to perform')
                         ]
-                    )
                     if (userInput == 'apply') {
                         dir("/var/lib/jenkins/workspace/${JOB_NAME}/EC2") {
                             sh "ls -la"
