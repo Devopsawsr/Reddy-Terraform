@@ -9,7 +9,9 @@ pipeline {
         }
         stage('Terraform init') {
             steps {
-                sh 'terraform init'
+                dir('/var/jenkins_home/workspace/SamplePipeline/scripts') {
+                    sh 'terraform init'
+                }
             }
         }
         stage('Terraform apply') {
@@ -17,6 +19,5 @@ pipeline {
                 sh 'terraform apply --auto-approve'
             }
         }
-        
     }
 }
