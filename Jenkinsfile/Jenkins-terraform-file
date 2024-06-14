@@ -1,20 +1,33 @@
 pipeline {
+    environment {
+        terraform = "/var/lib/jenkins/workspace/${JOB_NAME}/EC2"
+    }
     agent any
     stages {
-        stage('Checkout') {
+        stage('checkout') {
             steps {
-                checkout scm
+                script {
+                    checkout scm
+                }
             }
         }
-        stage('Terraform init') {
+        stage('Plan') {
             steps {
-                dir("/var/lib/jenkins/workspace/${JOB_NAME}/EC2") {
-                    sh "ls -la"
-                    sleep 10
-                    sh 'terraform init'
-                    sh 'terraform plan'
-                    sh 'terraform apply -auto-approve'
-                }
+                sh 'cd ${terraform} && terraform init'
+                sh 'cd ${terraform} && terraform plan -out tfplan'
+                sh 'cd ${terraform} && terraform show -no-color tfplan > tfplan.txt'
+            }
+        }
+    stage('Approval') {
+      steps {
+        script {
+          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+        }
+      }
+    }
+        stage('Apply') {
+            steps {
+                sh 'cd ${terraform} && terraform apply -input=false tfplan'
             }
         }
     }
