@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        terraform = "/var/lib/jenkins/workspace/${JOB_NAME}/terraform-ec2"
+        terraform = "/var/lib/jenkins/workspace/${JOB_NAME}/EC2-01"
     }
     agent any
     stages {
