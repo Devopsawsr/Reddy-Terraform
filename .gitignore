@@ -4,3 +4,7 @@
 **/*.tfstate.*
 #**/terraform.*
 **/*.terraform.lock.*/*
+.terraform.lock.hcl
+terraform-provider*
+terraform.*
+.terraform*
