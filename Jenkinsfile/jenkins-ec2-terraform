@@ -1,0 +1,30 @@
+pipeline {
+    environment {
+        terraform = "/var/lib/jenkins/workspace/${JOB_NAME}/terraform-ec2"
+    }
+    agent any
+    stages {
+        stage("CheckoutSCM") {
+            steps {
+                checkout scm
+            }
+        }
+        stage("Initialation") {
+            steps {
+                sh " cd ${terraform} && terraform init"
+
+            }
+        }
+        stage("plan") {
+            steps {
+                sh "cd ${terraform} && terraform plan -out tfplan"
+                sh "cd ${terraform} && terraform show -no-color tfplan > tfplan.txt"
+            }
+        }
+        stage("Apply") {
+            steps {
+                sh "cd ${terraform} && terraform apply -input=false tfplan"
+            }
+        }
+    }
+}
