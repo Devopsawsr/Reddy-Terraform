@@ -1,5 +1,5 @@
 locals {
-  instance_name = "mnptech-${terraform.workspace}-app"
+  instance_name = "mnptech-web-${terraform.workspace}-${var.resource_tags["project"]}-${var.resource_tags["environment"]}"
 }
 resource "aws_instance" "reddy-web" {
   ami                    = "ami-0b72821e2f351e396"
